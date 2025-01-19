@@ -1,0 +1,22 @@
+name: Enforce Correct Merge Flow
+
+on:
+  pull_request:
+    branches:
+      - stage
+      - prod
+
+jobs:
+  enforce-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR source branch
+        run: |
+          if [[ $GITHUB_REF == "refs/heads/stage" && $GITHUB_HEAD_REF != "dev" ]]; then
+            echo "Error: PRs to 'stage' must come from 'dev'.";
+            exit 1;
+          fi
+          if [[ $GITHUB_REF == "refs/heads/prod" && $GITHUB_HEAD_REF != "stage" ]]; then
+            echo "Error: PRs to 'prod' must come from 'stage'.";
+            exit 1;
+          fi
