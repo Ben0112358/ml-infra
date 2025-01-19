@@ -11,12 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR source branch
+        env:
+          TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
-          if [[ $GITHUB_REF == "refs/heads/stage" && $GITHUB_HEAD_REF != "dev" ]]; then
+          echo "Target branch: $TARGET_BRANCH"
+          echo "Source branch: $SOURCE_BRANCH"
+          
+          if [[ "$TARGET_BRANCH" == "stage" && "$SOURCE_BRANCH" != "dev" ]]; then
             echo "Error: PRs to 'stage' must come from 'dev'.";
             exit 1;
           fi
-          if [[ $GITHUB_REF == "refs/heads/prod" && $GITHUB_HEAD_REF != "stage" ]]; then
+
+          if [[ "$TARGET_BRANCH" == "prod" && "$SOURCE_BRANCH" != "stage" ]]; then
             echo "Error: PRs to 'prod' must come from 'stage'.";
             exit 1;
           fi
