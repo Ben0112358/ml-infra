@@ -21,7 +21,7 @@ mkdir -p ${var.ml_homelab_root}/data/raw
 chmod 755 ${var.ml_homelab_root}/data/raw
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Clean data
@@ -32,7 +32,7 @@ mkdir -p ${var.ml_homelab_root}/data/clean
 chmod 755 ${var.ml_homelab_root}/data/clean
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Models
@@ -43,7 +43,7 @@ mkdir -p ${var.ml_homelab_root}/models
 chmod 755 ${var.ml_homelab_root}/models
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Logs - terraform
@@ -54,7 +54,7 @@ mkdir -p ${var.ml_homelab_root}/logs/terraform
 chmod 755 ${var.ml_homelab_root}/logs/terraform
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Logs - data
@@ -65,7 +65,7 @@ mkdir -p ${var.ml_homelab_root}/logs/data
 chmod 755 ${var.ml_homelab_root}/logs/data
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Logs - training
@@ -76,7 +76,7 @@ mkdir -p ${var.ml_homelab_root}/logs/training
 chmod 755 ${var.ml_homelab_root}/logs/training
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 # Logs - serving / api
@@ -87,5 +87,5 @@ mkdir -p ${var.ml_homelab_root}/logs/serving
 chmod 755 ${var.ml_homelab_root}/logs/serving
 EOT
   }
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
