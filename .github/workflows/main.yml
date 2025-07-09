@@ -1,29 +1,25 @@
-name: Enforce Correct Merge Flow
+name: Terraform Lint and Validate on PR to main
 
 on:
   pull_request:
     branches:
-      - stage
-      - prod
+      - main
 
 jobs:
-  enforce-merge:
+  terraform-check:
     runs-on: ubuntu-latest
-    steps:
-      - name: Check PR source branch
-        env:
-          TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
-          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
-        run: |
-          echo "Target branch: $TARGET_BRANCH"
-          echo "Source branch: $SOURCE_BRANCH"
-          
-          if [[ "$TARGET_BRANCH" == "stage" && "$SOURCE_BRANCH" != "dev" ]]; then
-            echo "Error: PRs to 'stage' must come from 'dev'.";
-            exit 1;
-          fi
 
-          if [[ "$TARGET_BRANCH" == "prod" && "$SOURCE_BRANCH" != "stage" ]]; then
-            echo "Error: PRs to 'prod' must come from 'stage'.";
-            exit 1;
-          fi
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.12.2'
+
+      - name: Terraform fmt check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform validate
+        run: terraform validate
