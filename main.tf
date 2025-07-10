@@ -96,14 +96,14 @@ EOT
 data "template_file" "global_config" {
   template = file("${path.module}/templates/config.yaml.tmpl")
   vars = {
-    raw_data   = "${var.ml_homelab_root}/data/raw"
-    clean_data = "${var.ml_homelab_root}/data/clean"
-    models     = "${var.ml_homelab_root}/models"
-    logs       = "${var.ml_homelab_root}/logs"
-    data_logs  = "${var.ml_homelab_root}/logs/data"
-    serving_logs  = "${var.ml_homelab_root}/logs/serving"
-    terraform_logs  = "${var.ml_homelab_root}/logs/terraform"
-    training_logs = "${var.ml_homelab_root}/logs/training"
+    raw_data       = "${var.ml_homelab_root}/data/raw"
+    clean_data     = "${var.ml_homelab_root}/data/clean"
+    models         = "${var.ml_homelab_root}/models"
+    logs           = "${var.ml_homelab_root}/logs"
+    data_logs      = "${var.ml_homelab_root}/logs/data"
+    serving_logs   = "${var.ml_homelab_root}/logs/serving"
+    terraform_logs = "${var.ml_homelab_root}/logs/terraform"
+    training_logs  = "${var.ml_homelab_root}/logs/training"
   }
 }
 
