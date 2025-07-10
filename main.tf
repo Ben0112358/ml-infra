@@ -89,3 +89,21 @@ EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
 }
+
+###################################################
+############### CONFIG CREATION ###################
+###################################################
+data "template_file" "global_config" {
+  template = file("${path.module}/templates/config.yaml.tmpl")
+  vars = {
+    raw_data   = "${var.ml_homelab_root}/data/raw"
+    clean_data = "${var.ml_homelab_root}/data/clean"
+    models     = "${var.ml_homelab_root}/models"
+    logs       = "${var.ml_homelab_root}/logs"
+  }
+}
+
+resource "local_file" "global_config_file" {
+  content  = data.template_file.global_config.rendered
+  filename = "${var.ml_homelab_root}/config.yaml"
+}
