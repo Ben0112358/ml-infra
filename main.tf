@@ -100,6 +100,10 @@ data "template_file" "global_config" {
     clean_data = "${var.ml_homelab_root}/data/clean"
     models     = "${var.ml_homelab_root}/models"
     logs       = "${var.ml_homelab_root}/logs"
+    data_logs  = "${var.ml_homelab_root}/logs/data"
+    serving_logs  = "${var.ml_homelab_root}/logs/serving"
+    terraform_logs  = "${var.ml_homelab_root}/logs/terraform"
+    training_logs = "${var.ml_homelab_root}/logs/training"
   }
 }
 
