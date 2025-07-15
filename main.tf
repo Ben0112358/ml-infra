@@ -79,12 +79,23 @@ EOT
   depends_on = [null_resource.create_ml_homelab_root]
 }
 
-# Logs - serving / api
+# Logs - serving
 resource "null_resource" "create_serving_logs_dir" {
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/serving
 chmod 755 ${var.ml_homelab_root}/logs/serving
+EOT
+  }
+  depends_on = [null_resource.create_ml_homelab_root]
+}
+
+# Logs - ui
+resource "null_resource" "create_ui_logs_dir" {
+  provisioner "local-exec" {
+    command = <<EOT
+mkdir -p ${var.ml_homelab_root}/logs/ui
+chmod 755 ${var.ml_homelab_root}/logs/ui
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -100,10 +111,11 @@ data "template_file" "global_config" {
     clean_data     = "${var.ml_homelab_root}/data/clean"
     models         = "${var.ml_homelab_root}/models"
     logs           = "${var.ml_homelab_root}/logs"
-    data_logs      = "${var.ml_homelab_root}/logs/data"
-    serving_logs   = "${var.ml_homelab_root}/logs/serving"
     terraform_logs = "${var.ml_homelab_root}/logs/terraform"
+    data_logs      = "${var.ml_homelab_root}/logs/data"
     training_logs  = "${var.ml_homelab_root}/logs/training"
+    serving_logs   = "${var.ml_homelab_root}/logs/serving"
+    ui_logs        = "${var.ml_homelab_root}/logs/ui"
   }
 }
 
