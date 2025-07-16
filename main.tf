@@ -101,6 +101,17 @@ EOT
   depends_on = [null_resource.create_ml_homelab_root]
 }
 
+# Logs - pipeline
+resource "null_resource" "create_pipeline_logs_dir" {
+  provisioner "local-exec" {
+    command = <<EOT
+mkdir -p ${var.ml_homelab_root}/logs/pipeline
+chmod 755 ${var.ml_homelab_root}/logs/pipeline
+EOT
+  }
+  depends_on = [null_resource.create_ml_homelab_root]
+}
+
 ###################################################
 ############### CONFIG CREATION ###################
 ###################################################
@@ -116,6 +127,7 @@ data "template_file" "global_config" {
     training_logs  = "${var.ml_homelab_root}/logs/training"
     serving_logs   = "${var.ml_homelab_root}/logs/serving"
     ui_logs        = "${var.ml_homelab_root}/logs/ui"
+    pipeline_logs  = "${var.ml_homelab_root}/logs/pipeline"
   }
 }
 
