@@ -113,21 +113,42 @@ EOT
 }
 
 ###################################################
+################ NETWORK STUFF ####################
+###################################################
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_network" "dummy_project" {
+  name            = "dummy_project"
+  driver          = "bridge"
+  check_duplicate = true
+}
+
+###################################################
 ############### CONFIG CREATION ###################
 ###################################################
 data "template_file" "global_config" {
   template = file("${path.module}/templates/config.yaml.tmpl")
   vars = {
-    raw_data       = "${var.ml_homelab_root}/data/raw"
-    clean_data     = "${var.ml_homelab_root}/data/clean"
-    models         = "${var.ml_homelab_root}/models"
-    logs           = "${var.ml_homelab_root}/logs"
-    terraform_logs = "${var.ml_homelab_root}/logs/terraform"
-    data_logs      = "${var.ml_homelab_root}/logs/data"
-    training_logs  = "${var.ml_homelab_root}/logs/training"
-    serving_logs   = "${var.ml_homelab_root}/logs/serving"
-    ui_logs        = "${var.ml_homelab_root}/logs/ui"
-    pipeline_logs  = "${var.ml_homelab_root}/logs/pipeline"
+    raw_data              = "${var.ml_homelab_root}/data/raw"
+    clean_data            = "${var.ml_homelab_root}/data/clean"
+    models                = "${var.ml_homelab_root}/models"
+    logs                  = "${var.ml_homelab_root}/logs"
+    terraform_logs        = "${var.ml_homelab_root}/logs/terraform"
+    data_logs             = "${var.ml_homelab_root}/logs/data"
+    training_logs         = "${var.ml_homelab_root}/logs/training"
+    serving_logs          = "${var.ml_homelab_root}/logs/serving"
+    ui_logs               = "${var.ml_homelab_root}/logs/ui"
+    pipeline_logs         = "${var.ml_homelab_root}/logs/pipeline"
+    dummy_project_network = docker_network.dummy_project.name
   }
 }
 
