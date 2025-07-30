@@ -1,10 +1,15 @@
+###################################################
+################# SHARED STUFF ####################
+###################################################
 
-###################################################
+
 ############### FOLDER CREATION ###################
-###################################################
 
 # Root
 resource "null_resource" "create_ml_homelab_root" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}
@@ -15,6 +20,9 @@ EOT
 
 # Raw data
 resource "null_resource" "create_raw_data_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/data/raw
@@ -26,6 +34,9 @@ EOT
 
 # Clean data
 resource "null_resource" "create_clean_data_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/data/clean
@@ -37,6 +48,9 @@ EOT
 
 # Models
 resource "null_resource" "create_models_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/models
@@ -46,8 +60,25 @@ EOT
   depends_on = [null_resource.create_ml_homelab_root]
 }
 
+# Configs
+resource "null_resource" "create_configs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
+  provisioner "local-exec" {
+    command = <<EOT
+mkdir -p ${var.ml_homelab_root}/configs
+chmod 755 ${var.ml_homelab_root}/configs
+EOT
+  }
+  depends_on = [null_resource.create_ml_homelab_root]
+}
+
 # Logs - terraform
 resource "null_resource" "create_terraform_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/terraform
@@ -59,6 +90,9 @@ EOT
 
 # Logs - data
 resource "null_resource" "create_data_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/data
@@ -70,6 +104,9 @@ EOT
 
 # Logs - training
 resource "null_resource" "create_training_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/training
@@ -81,6 +118,9 @@ EOT
 
 # Logs - serving
 resource "null_resource" "create_serving_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/serving
@@ -92,6 +132,9 @@ EOT
 
 # Logs - ui
 resource "null_resource" "create_ui_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/ui
@@ -103,6 +146,9 @@ EOT
 
 # Logs - pipeline
 resource "null_resource" "create_pipeline_logs_dir" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = <<EOT
 mkdir -p ${var.ml_homelab_root}/logs/pipeline
@@ -112,47 +158,40 @@ EOT
   depends_on = [null_resource.create_ml_homelab_root]
 }
 
+
 ###################################################
-################ NETWORK STUFF ####################
+############## PROJECT & MODE SPECIFIC ############
 ###################################################
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0"
-    }
-  }
+locals {
+  config_path="${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
 }
 
-provider "docker" {}
+module "dummy_project_dev" {
+  source = "./modules/dev/dummy_project"
+  count  = var.mode == "dev" && var.project_name == "dummy_project" ? 1 : 0
+  shared_template_vars = local.shared_template_vars
+  ml_homelab_root = var.ml_homelab_root
+  mode = var.mode
+  project_name = var.project_name
+  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_path = local.config_path
+  docker_network_name = var.docker_network_name
+  timestamp = var.timestamp
 
-resource "docker_network" "dummy_project" {
-  name            = "dummy_project"
-  driver          = "bridge"
-  check_duplicate = true
+  depends_on = [ null_resource.create_ml_homelab_root ]
 }
 
-###################################################
-############### CONFIG CREATION ###################
-###################################################
-data "template_file" "global_config" {
-  template = file("${path.module}/templates/config.yaml.tmpl")
-  vars = {
-    raw_data              = "${var.ml_homelab_root}/data/raw"
-    clean_data            = "${var.ml_homelab_root}/data/clean"
-    models                = "${var.ml_homelab_root}/models"
-    logs                  = "${var.ml_homelab_root}/logs"
-    terraform_logs        = "${var.ml_homelab_root}/logs/terraform"
-    data_logs             = "${var.ml_homelab_root}/logs/data"
-    training_logs         = "${var.ml_homelab_root}/logs/training"
-    serving_logs          = "${var.ml_homelab_root}/logs/serving"
-    ui_logs               = "${var.ml_homelab_root}/logs/ui"
-    pipeline_logs         = "${var.ml_homelab_root}/logs/pipeline"
-    dummy_project_network = docker_network.dummy_project.name
-  }
-}
+module "dummy_project_prod" {
+  source = "./modules/prod/dummy_project"
+  count  = var.mode == "prod" && var.project_name == "dummy_project" ? 1 : 0
+  shared_template_vars = local.shared_template_vars
+  ml_homelab_root = var.ml_homelab_root
+  mode = var.mode
+  project_name = var.project_name
+  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_path = local.config_path
+  docker_network_name = var.docker_network_name
+  timestamp = var.timestamp
 
-resource "local_file" "global_config_file" {
-  content  = data.template_file.global_config.rendered
-  filename = "${var.ml_homelab_root}/config.yaml"
+  depends_on = [ null_resource.create_ml_homelab_root ]
 }
