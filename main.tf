@@ -163,35 +163,35 @@ EOT
 ############## PROJECT & MODE SPECIFIC ############
 ###################################################
 locals {
-  config_path="${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
+  config_path = "${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
 }
 
 module "dummy_project_dev" {
-  source = "./modules/dev/dummy_project"
-  count  = var.mode == "dev" && var.project_name == "dummy_project" ? 1 : 0
+  source               = "./modules/dev/dummy_project"
+  count                = var.mode == "dev" && var.project_name == "dummy_project" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root = var.ml_homelab_root
-  mode = var.mode
-  project_name = var.project_name
+  ml_homelab_root      = var.ml_homelab_root
+  mode                 = var.mode
+  project_name         = var.project_name
   config_template_path = "${path.root}/templates/config.yaml.tmpl"
-  config_path = local.config_path
-  docker_network_name = var.docker_network_name
-  timestamp = var.timestamp
+  config_path          = local.config_path
+  docker_network_name  = var.docker_network_name
+  timestamp            = var.timestamp
 
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }
 
 module "dummy_project_prod" {
-  source = "./modules/prod/dummy_project"
-  count  = var.mode == "prod" && var.project_name == "dummy_project" ? 1 : 0
+  source               = "./modules/prod/dummy_project"
+  count                = var.mode == "prod" && var.project_name == "dummy_project" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root = var.ml_homelab_root
-  mode = var.mode
-  project_name = var.project_name
+  ml_homelab_root      = var.ml_homelab_root
+  mode                 = var.mode
+  project_name         = var.project_name
   config_template_path = "${path.root}/templates/config.yaml.tmpl"
-  config_path = local.config_path
-  docker_network_name = var.docker_network_name
-  timestamp = var.timestamp
+  config_path          = local.config_path
+  docker_network_name  = var.docker_network_name
+  timestamp            = var.timestamp
 
-  depends_on = [ null_resource.create_ml_homelab_root ]
+  depends_on = [null_resource.create_ml_homelab_root]
 }

@@ -38,8 +38,8 @@ data "template_file" "global_config_dummy_project_prod" {
 }
 
 resource "local_file" "global_config_file_dummy_project_prod" {
-  content  = data.template_file.global_config_dummy_project_prod.rendered
-  filename = var.config_path
-  depends_on = [ null_resource.always_run ]
+  content    = data.template_file.global_config_dummy_project_prod.rendered
+  filename   = var.config_path
+  depends_on = [null_resource.always_run]
 }
 
