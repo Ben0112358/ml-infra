@@ -81,8 +81,8 @@ resource "null_resource" "create_terraform_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/terraform
-chmod 755 ${var.ml_homelab_root}/logs/terraform
+mkdir -p ${var.ml_homelab_root}/logs/infra
+chmod 755 ${var.ml_homelab_root}/logs/infra
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
