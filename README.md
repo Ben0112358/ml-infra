@@ -7,7 +7,7 @@ You normally **don’t run this repo directly** (although you can). It is automa
 
 ---
 
-## 🗂️ What It Sets Up
+## What It Sets Up
 
 - **Root folder** → `$ML_HOMELAB_ROOT`
 - **Subfolders**:
@@ -27,7 +27,7 @@ You normally **don’t run this repo directly** (although you can). It is automa
 
 ---
 
-## ⚡ Usage
+## Usage
 You don’t interact with `ml-infra` directly.  
 Instead, it runs automatically when you launch the pipeline from [`ml-pipeline`](https://github.com/Ben0112358/ml-pipeline):
 
@@ -67,12 +67,12 @@ The repo is organized like this:
 
 ---
 
-## 📜 Terraform Outputs
+## Terraform Outputs
 A special feature of `outputs.tf` is that if you define an **UPPER CASE output**, it will become an environment variable which can be used by stages further down the ml pipeline. This is the case with `CONFIG_PATH` for example, which is used by stages down the pipeline in config.py so that we can conveniently import all relevant paths in python.
 
 ---
 
-## 🌍 Role in the Ecosystem
+## Role in the Ecosystem
 
 - **First stage** of any pipeline execution.  
 - Guarantees a **consistent directory structure** for data, models, logs, and configs. 
