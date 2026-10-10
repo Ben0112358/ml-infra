@@ -233,3 +233,37 @@ module "investing_allocation_optimizer_prod" {
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
+
+###################################################
+################ BOARD MEETING PROTOCOL ###########
+###################################################
+
+module "board_meeting_protocol_dev" {
+  source               = "./modules/dev/board_meeting_protocol"
+  count                = var.mode == "dev" && var.project_name == "board_meeting_protocol" ? 1 : 0
+  shared_template_vars = local.shared_template_vars
+  ml_homelab_root      = var.ml_homelab_root
+  mode                 = var.mode
+  project_name         = var.project_name
+  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_path          = local.config_path
+  docker_network_name  = var.docker_network_name
+  timestamp            = var.timestamp
+
+  depends_on = [null_resource.create_ml_homelab_root]
+}
+
+module "board_meeting_protocol_prod" {
+  source               = "./modules/prod/board_meeting_protocol"
+  count                = var.mode == "prod" && var.project_name == "board_meeting_protocol" ? 1 : 0
+  shared_template_vars = local.shared_template_vars
+  ml_homelab_root      = var.ml_homelab_root
+  mode                 = var.mode
+  project_name         = var.project_name
+  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_path          = local.config_path
+  docker_network_name  = var.docker_network_name
+  timestamp            = var.timestamp
+
+  depends_on = [null_resource.create_ml_homelab_root]
+}
