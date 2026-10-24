@@ -5,7 +5,7 @@ variable "ml_homelab_root" {
 }
 
 variable "mode" {
-  description = "Dev|Prod. Must be set via environment variable TF_VAR_mode."
+  description = "dev|prod (lowercase). Must be set via environment variable TF_VAR_mode."
   type        = string
   default     = ""
 }
@@ -17,13 +17,13 @@ variable "project_name" {
 }
 
 variable "docker_network_name" {
-  description = "Name of the project docket network. Must be set via environment variable TF_VAR_docker_network_name."
+  description = "Name of the project docker network. Must be set via environment variable TF_VAR_docker_network_name."
   type        = string
   default     = ""
 }
 
 variable "timestamp" {
-  description = "Timestamp of the execution. Must be set via environment variable TF_VAR_docker_timestamp."
+  description = "Timestamp of the execution. Must be set via environment variable TF_VAR_timestamp."
   type        = string
   default     = ""
 }
