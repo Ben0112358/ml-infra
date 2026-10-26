@@ -163,7 +163,8 @@ EOT
 ############## PROJECT & MODE SPECIFIC ############
 ###################################################
 locals {
-  config_path = "${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
+  config_path          = "${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
+  config_template_path = "${path.root}/templates/config.yaml.tmpl"
 }
 
 ###################################################
@@ -177,7 +178,7 @@ module "dummy_project_dev" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
@@ -192,7 +193,7 @@ module "dummy_project_prod" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
@@ -211,7 +212,7 @@ module "investing_allocation_optimizer_dev" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
@@ -226,7 +227,7 @@ module "investing_allocation_optimizer_prod" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
@@ -245,7 +246,7 @@ module "board_meeting_protocol_dev" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
@@ -260,7 +261,7 @@ module "board_meeting_protocol_prod" {
   ml_homelab_root      = var.ml_homelab_root
   mode                 = var.mode
   project_name         = var.project_name
-  config_template_path = "${path.root}/templates/config.yaml.tmpl"
+  config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
   timestamp            = var.timestamp
