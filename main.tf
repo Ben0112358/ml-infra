@@ -175,13 +175,9 @@ module "dummy_project_dev" {
   source               = "./modules/dev/dummy_project"
   count                = var.mode == "dev" && var.project_name == "dummy_project" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
@@ -190,13 +186,9 @@ module "dummy_project_prod" {
   source               = "./modules/prod/dummy_project"
   count                = var.mode == "prod" && var.project_name == "dummy_project" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
@@ -209,13 +201,9 @@ module "investing_allocation_optimizer_dev" {
   source               = "./modules/dev/investing_allocation_optimizer"
   count                = var.mode == "dev" && var.project_name == "investing_allocation_optimizer" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
@@ -224,13 +212,9 @@ module "investing_allocation_optimizer_prod" {
   source               = "./modules/prod/investing_allocation_optimizer"
   count                = var.mode == "prod" && var.project_name == "investing_allocation_optimizer" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
@@ -243,13 +227,9 @@ module "board_meeting_protocol_dev" {
   source               = "./modules/dev/board_meeting_protocol"
   count                = var.mode == "dev" && var.project_name == "board_meeting_protocol" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
@@ -258,13 +238,9 @@ module "board_meeting_protocol_prod" {
   source               = "./modules/prod/board_meeting_protocol"
   count                = var.mode == "prod" && var.project_name == "board_meeting_protocol" ? 1 : 0
   shared_template_vars = local.shared_template_vars
-  ml_homelab_root      = var.ml_homelab_root
-  mode                 = var.mode
-  project_name         = var.project_name
   config_template_path = local.config_template_path
   config_path          = local.config_path
   docker_network_name  = var.docker_network_name
-  timestamp            = var.timestamp
 
   depends_on = [null_resource.create_ml_homelab_root]
 }
