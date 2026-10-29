@@ -1,4 +1,6 @@
 locals {
+  configs_dir = "${var.ml_homelab_root}/configs"
+
   shared_template_vars = {
     raw_data       = "${var.ml_homelab_root}/data/raw"
     clean_data     = "${var.ml_homelab_root}/data/clean"

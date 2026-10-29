@@ -67,8 +67,8 @@ resource "null_resource" "create_configs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/configs
-chmod 755 ${var.ml_homelab_root}/configs
+mkdir -p ${local.configs_dir}
+chmod 755 ${local.configs_dir}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -163,7 +163,7 @@ EOT
 ############## PROJECT & MODE SPECIFIC ############
 ###################################################
 locals {
-  config_path          = "${var.ml_homelab_root}/configs/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
+  config_path          = "${local.configs_dir}/config_${var.project_name}_${var.mode}_${var.timestamp}.yaml"
   config_template_path = "${path.root}/templates/config.yaml.tmpl"
 }
 
