@@ -49,12 +49,10 @@ The repo is organized like this:
 │   ├── dev/
 │   │   └── <project>/
 │   │       ├── main.tf
-│   │       ├── outputs.tf
 │   │       └── variables.tf
 │   └── prod/
 │       └── <project>/
 │           ├── main.tf
-│           ├── outputs.tf
 │           └── variables.tf
 └── templates/
     └── config.yaml.tmpl # template for generated configs
