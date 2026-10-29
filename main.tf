@@ -25,8 +25,8 @@ resource "null_resource" "create_raw_data_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/data/raw
-chmod 755 ${var.ml_homelab_root}/data/raw
+mkdir -p ${local.shared_template_vars.raw_data}
+chmod 755 ${local.shared_template_vars.raw_data}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -39,8 +39,8 @@ resource "null_resource" "create_clean_data_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/data/clean
-chmod 755 ${var.ml_homelab_root}/data/clean
+mkdir -p ${local.shared_template_vars.clean_data}
+chmod 755 ${local.shared_template_vars.clean_data}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -53,8 +53,8 @@ resource "null_resource" "create_models_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/models
-chmod 755 ${var.ml_homelab_root}/models
+mkdir -p ${local.shared_template_vars.models}
+chmod 755 ${local.shared_template_vars.models}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -81,8 +81,8 @@ resource "null_resource" "create_terraform_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/infra
-chmod 755 ${var.ml_homelab_root}/logs/infra
+mkdir -p ${local.shared_template_vars.terraform_logs}
+chmod 755 ${local.shared_template_vars.terraform_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -95,8 +95,8 @@ resource "null_resource" "create_data_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/data
-chmod 755 ${var.ml_homelab_root}/logs/data
+mkdir -p ${local.shared_template_vars.data_logs}
+chmod 755 ${local.shared_template_vars.data_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -109,8 +109,8 @@ resource "null_resource" "create_training_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/training
-chmod 755 ${var.ml_homelab_root}/logs/training
+mkdir -p ${local.shared_template_vars.training_logs}
+chmod 755 ${local.shared_template_vars.training_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -123,8 +123,8 @@ resource "null_resource" "create_serving_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/serving
-chmod 755 ${var.ml_homelab_root}/logs/serving
+mkdir -p ${local.shared_template_vars.serving_logs}
+chmod 755 ${local.shared_template_vars.serving_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -137,8 +137,8 @@ resource "null_resource" "create_ui_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/ui
-chmod 755 ${var.ml_homelab_root}/logs/ui
+mkdir -p ${local.shared_template_vars.ui_logs}
+chmod 755 ${local.shared_template_vars.ui_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
@@ -151,8 +151,8 @@ resource "null_resource" "create_pipeline_logs_dir" {
   }
   provisioner "local-exec" {
     command = <<EOT
-mkdir -p ${var.ml_homelab_root}/logs/pipeline
-chmod 755 ${var.ml_homelab_root}/logs/pipeline
+mkdir -p ${local.shared_template_vars.pipeline_logs}
+chmod 755 ${local.shared_template_vars.pipeline_logs}
 EOT
   }
   depends_on = [null_resource.create_ml_homelab_root]
