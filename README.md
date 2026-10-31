@@ -44,7 +44,7 @@ The repo is organized like this:
 ├── main.tf              # shared infra setup
 ├── outputs.tf           # defines exported outputs (env vars)
 ├── variables.tf         # input variables
-├── globals.tf           # global Terraform settings
+├── globals.tf           # shared local values (folder paths used by main.tf)
 ├── modules/
 │   ├── dev/
 │   │   └── <project>/
@@ -62,6 +62,17 @@ The repo is organized like this:
 - `main.tf` wires up the shared infra and invokes the appropriate project+mode module.  
 - `templates/config.yaml.tmpl` defines the config file structure that will be generated for each run.  
 - `outputs.tf` outputs of the run.
+
+#### Inputs
+The root module reads five input variables, each set through an environment variable (see `variables.tf`):
+
+- `TF_VAR_ml_homelab_root` → root folder under which all folders and configs are created
+- `TF_VAR_mode` → `dev` or `prod` (lowercase), selects the module under `modules/dev/` or `modules/prod/`
+- `TF_VAR_project_name` → project to run infra for
+- `TF_VAR_docker_network_name` → name of the project's Docker network
+- `TF_VAR_timestamp` → timestamp of the execution, used in the generated config file name
+
+A project module only runs when `mode` and `project_name` match one of the project modules wired up in `main.tf`. Otherwise only the shared folders are created, and no config file or Docker network is set up.
 
 ---
 
