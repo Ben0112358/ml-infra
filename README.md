@@ -35,6 +35,30 @@ Instead, it runs automatically when you launch the pipeline from [`ml-pipeline`]
 bash execute.sh <project_name> <mode>
 ```
 
+### Running It Directly
+To run `ml-infra` on its own, for example while developing a project module, you need:
+
+- **Terraform** (CI uses version 1.12.2)
+- **Docker CLI**, because every project module creates the project's Docker network with `docker network` commands
+- A shell with `mkdir` and `chmod`, which create the folders
+
+Set the five inputs (see [Inputs](#inputs)) and apply from the repo root:
+
+```bash
+export TF_VAR_ml_homelab_root=/path/to/ml_homelab
+export TF_VAR_mode=dev
+export TF_VAR_project_name=dummy_project
+export TF_VAR_docker_network_name=dummy_project_network
+export TF_VAR_timestamp=$(date +%Y%m%d_%H%M%S)
+
+terraform init
+terraform apply
+```
+
+If a Docker network with the given name already exists, the project module deletes it and creates it again.
+
+Pull requests to `main` run `terraform fmt -check -recursive` and `terraform validate` in CI, so run both locally before opening one.
+
 ---
 
 ### As a Developer
